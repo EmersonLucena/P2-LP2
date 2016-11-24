@@ -23,6 +23,7 @@ public class Main {
 				supermercado.iniciaCadastro();
 				break;
 			case VENDER:
+				supermercado.iniciaVenda();
 				break;
 			case IMPRIMIR:
 				break;

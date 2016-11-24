@@ -16,4 +16,10 @@ public class Estoque {
 			antigoProduto = novoProduto;
 		}
 	}
+	
+	public Produto pesquisaProduto(String nome) {
+		return arrayDinamico.pesquisaProduto(nome);
+	}
+	
+	//TODO na venda, caso quantidade = 0 retirar produto do array
 }

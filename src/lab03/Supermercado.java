@@ -13,6 +13,7 @@ public class Supermercado {
 	public void iniciaCadastro() {
 		System.out.println("\n= = = = Cadastro de Produtos = = = =");
 		String opcao = "";
+		
 		while(!opcao.equals("Nao")) {
 			System.out.print("Digite o nome do produto: ");
 			String nome = sc.nextLine().trim();
@@ -37,5 +38,35 @@ public class Supermercado {
 	private void cadastraProduto(String nome, String tipo, double preco, int quantidade) {
 		Produto novoProduto = new Produto(nome, tipo, preco, quantidade);
 		estoque.cadastraProduto(novoProduto);
+	}
+	
+	public void iniciaVenda() {
+		System.out.println("\n= = = = Venda de Produtos = = = =");
+		String opcao = "";
+		
+		while(!opcao.equals("Nao")) {
+			System.out.print("Digite o nome do produto: ");
+			String nome = sc.nextLine().trim();
+			
+			Produto produtoParaVenda = estoque.pesquisaProduto(nome);
+			if(produtoParaVenda != null) { 
+				
+				System.out.print("Digite a quantidade a ser vendida: ");
+				int quantidade = Integer.parseInt(sc.nextLine().trim());
+				
+				int quantidadeDisponivel = produtoParaVenda.getQuantidade();
+				if(quantidade >= quantidadeDisponivel) {
+					vendeProduto(nome, quantidade);
+					System.out.println("==> Total arrecadado: R$ " + quantidade * produtoParaVenda.getPreco()); 
+					
+				} else {
+					System.out.println("Não é possível vender pois não há " + nome + " suficiente."); 
+					System.out.println("Há apenas " + quantidadeDisponivel + " produto(s) "+ nome + " no estoque"); 
+				}
+			} else System.out.println("==> " + nome + " nao cadastrado no sistema.");
+			
+			System.out.print("Deseja cadastrar outro produto? ");
+			opcao = sc.nextLine().trim();
+		}
 	}
 }
