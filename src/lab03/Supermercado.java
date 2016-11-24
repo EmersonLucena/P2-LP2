@@ -5,13 +5,14 @@ import java.util.Scanner;
 public class Supermercado {
 	Estoque estoque;
 	Scanner sc = new Scanner(System.in);
+	private final String NL = System.lineSeparator(); 
 	
 	public Supermercado() {
 		estoque = new Estoque();
 	}
 	
 	public void iniciaCadastro() {
-		System.out.println("\n= = = = Cadastro de Produtos = = = =");
+		System.out.println(NL + "= = = = Cadastro de Produtos = = = =");
 		String opcao = "";
 		
 		while(!opcao.equals("Nao")) {
@@ -28,7 +29,7 @@ public class Supermercado {
 			int quantidade = Integer.parseInt(sc.nextLine().trim());
  
 			cadastraProduto(nome, tipo, preco, quantidade);
-			System.out.println(quantidade +  " produto(s) \"" + nome + "\" cadastrado(s) com sucesso.\n");
+			System.out.println(quantidade +  " produto(s) \"" + nome + "\" cadastrado(s) com sucesso." + NL);
  
 			System.out.print("Deseja cadastrar outro produto? ");
 			opcao = sc.nextLine().trim();
@@ -41,32 +42,46 @@ public class Supermercado {
 	}
 	
 	public void iniciaVenda() {
-		System.out.println("\n= = = = Venda de Produtos = = = =");
-		String opcao = "";
+		System.out.println(NL + "= = = = Venda de Produtos = = = =");
+		String opcao;
 		
-		while(!opcao.equals("Nao")) {
+		do {
 			System.out.print("Digite o nome do produto: ");
 			String nome = sc.nextLine().trim();
 			
 			Produto produtoParaVenda = estoque.pesquisaProduto(nome);
 			if(produtoParaVenda != null) { 
+				System.out.println("==> " + nome + " (" + produtoParaVenda.getTipo() + "). R$" + produtoParaVenda.getPreco());
 				
-				System.out.print("Digite a quantidade a ser vendida: ");
+				System.out.print("Digite a quantidade a ser vendida: ");				
 				int quantidade = Integer.parseInt(sc.nextLine().trim());
 				
 				int quantidadeDisponivel = produtoParaVenda.getQuantidade();
-				if(quantidade >= quantidadeDisponivel) {
-					vendeProduto(nome, quantidade);
-					System.out.println("==> Total arrecadado: R$ " + quantidade * produtoParaVenda.getPreco()); 
+				if(quantidade <= quantidadeDisponivel) {
+					estoque.vendeProduto(produtoParaVenda, quantidade);
+					System.out.printf("==> Total arrecadado: R$ %.2f%s", quantidade * produtoParaVenda.getPreco(), NL); 
 					
 				} else {
-					System.out.println("Não é possível vender pois não há " + nome + " suficiente."); 
-					System.out.println("Há apenas " + quantidadeDisponivel + " produto(s) "+ nome + " no estoque"); 
+					System.out.println("NÃ£o Ã© possÃ­vel vender pois nÃ£o hÃ¡ " + nome + " suficiente."); 
+					System.out.println("HÃ¡ apenas " + quantidadeDisponivel + " produto(s) "+ nome + " no estoque"); 
 				}
 			} else System.out.println("==> " + nome + " nao cadastrado no sistema.");
 			
-			System.out.print("Deseja cadastrar outro produto? ");
+			System.out.print("Deseja vender outro produto? ");
 			opcao = sc.nextLine().trim();
+		} while(!opcao.equals("Nao"));
+	}
+
+	public void imprimeBalanco() {
+		System.out.println(NL + "= = = = Impressao de Balanco = = = =");
+		System.out.println("Produtos cadastrados:");
+		
+		String[] balanco = estoque.listaBalanco();
+		for(int i = 0; i < balanco.length; i++) {
+			System.out.printf("\t%d) %s\n", i+1, balanco[i]);
 		}
+		
+		System.out.printf("%sTotal arrecadado em vendas: R$ %.2f%s", NL, estoque.getTotalArrecadado(), NL);
+		System.out.printf("Total que pode ser arrecadado: R$ %.2f%s", estoque.getTotalDisponivel(), NL);
 	}
 }

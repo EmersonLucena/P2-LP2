@@ -17,16 +17,8 @@ public class Produto {
 		return nome;
 	}
  
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
- 
 	public String getTipo() {
 		return tipo;
-	}
- 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
 	}
  
 	public double getPreco() {
@@ -43,5 +35,10 @@ public class Produto {
  
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("%s (%s). R$%.2f Restante: %d", nome, tipo, preco, quantidade);
 	}
 }
