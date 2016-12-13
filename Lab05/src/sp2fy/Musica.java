@@ -7,15 +7,27 @@ public class Musica {
 	
 	public Musica(String titulo, String genero, int duracao) throws Exception {
 		if(titulo == null || titulo.equals(""))
-			throw new Exception("Título da música inválido!");
+			throw new Exception("Tï¿½tulo da mï¿½sica invï¿½lido!");
 		if(genero == null || genero.equals(""))
-			throw new Exception("Gênero da música inválido!");
+			throw new Exception("Gï¿½nero da mï¿½sica invï¿½lido!");
 		if(duracao <= 0)
-			throw new Exception("Duração da música inválida!");
+			throw new Exception("Duraï¿½ï¿½o da mï¿½sica invï¿½lida!");
 		
 		this.titulo = titulo;
 		this.genero = genero;
 		this.duracao = duracao;
+	}
+	
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public String getGenero() {
+		return genero;
+	}
+
+	public int getDuracao() {
+		return duracao;
 	}
 	
 	@Override
@@ -36,18 +48,6 @@ public class Musica {
 			return false;
 		return true;
 	}
-	
-	public String getTitulo() {
-		return titulo;
-	}
-
-	public String getGenero() {
-		return genero;
-	}
-
-	public int getDuracao() {
-		return duracao;
-	}
 
 	@Override
 	public int hashCode() {
@@ -56,11 +56,5 @@ public class Musica {
 		result = prime * result + duracao;
 		result = prime * result + ((titulo == null) ? 0 : titulo.hashCode());
 		return result;
-	}
-	
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
 	}
 }

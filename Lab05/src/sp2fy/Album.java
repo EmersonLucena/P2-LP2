@@ -12,11 +12,11 @@ public class Album {
 	
 	public Album(String artista, String titulo, int anoLancamento) throws Exception {
 		if(titulo == null || titulo.equals(""))
-			throw new Exception("Título do álbum inválido!");	
+			throw new Exception("Tï¿½tulo do ï¿½lbum invï¿½lido!");	
 		if(artista == null || artista.equals(""))
-			throw new Exception("Artista inválido!");
+			throw new Exception("Artista invï¿½lido!");
 		if(anoLancamento <= 1800)
-			throw new Exception("Ano de lançamento inválido!");
+			throw new Exception("Ano de lanï¿½amento invï¿½lido!");
 		
 		conteudo = new ArrayList<Musica>();
 		duracaoTotal = 0;
@@ -25,14 +25,30 @@ public class Album {
 		this.titulo = titulo;
 		this.anoLancamento = anoLancamento;
 	}
-	
+
+	public int getDuracaoTotal() {
+		return duracaoTotal;
+	}
+
+	public String getArtista() {
+		return artista;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public int getAnoLancamento() {
+		return anoLancamento;
+	}
+
 	public boolean musicaPresente(Musica musica) {
 		//TODO musica null
 		return conteudo.contains(musica);
 	}
 	
 	public boolean adicionarMusica(Musica musica) {
-		//TODO exceções
+		//TODO exceï¿½ï¿½es
 		if(!musicaPresente(musica)) {
 			conteudo.add(musica);
 			duracaoTotal += musica.getDuracao();
@@ -71,5 +87,11 @@ public class Album {
 		} else if (!titulo.equals(other.titulo))
 			return false;
 		return true;
+	}
+
+	public Musica getMusica(int faixa) throws Exception {
+		if(faixa > conteudo.size() || faixa <= 0)
+			throw new Exception("Faixa invalida!");
+		return conteudo.get(faixa - 1);
 	}
 }
